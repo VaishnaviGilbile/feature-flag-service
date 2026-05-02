@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Feature Flags</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+
+<header>
+    <div class="logo">feature-flags</div>
+    <div class="api-badge"><div class="dot"></div>API live</div>
+</header>
+
+<div class="container">
+
+    <div class="stats">
+        <div class="stat"><div class="stat-n" id="stat-total">—</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-n green" id="stat-enabled">—</div><div class="stat-label">Enabled</div></div>
+        <div class="stat"><div class="stat-n red" id="stat-disabled">—</div><div class="stat-label">Disabled</div></div>
+        <div class="stat"><div class="stat-n yellow" id="stat-rollout">—</div><div class="stat-label">Avg Rollout</div></div>
+    </div>
+
+    <div class="toolbar">
+        <h2>Flags</h2>
+        <button class="btn btn-primary" onclick="openCreate()">+ New Flag</button>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Key / Name</th>
+                <th>Enabled</th>
+                <th>Rollout</th>
+                <th>Environments</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="flags-body">
+            <tr><td colspan="5" class="empty-row">Loading…</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="eval-section">
+        <div class="section-title">Evaluate Flag</div>
+        <div class="eval-row">
+            <div class="field">
+                <label>Flag Key</label>
+                <input type="text" id="eval-key" placeholder="dark_mode"/>
+            </div>
+            <div class="field">
+                <label>User ID</label>
+                <input type="text" id="eval-user" placeholder="user_123"/>
+            </div>
+            <div class="field">
+                <label>Environment</label>
+                <input type="text" id="eval-env" placeholder="production"/>
+            </div>
+            <button class="btn btn-ghost" onclick="evaluateFlag()">Evaluate</button>
+        </div>
+        <div id="eval-result" class="eval-result"></div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="modal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title" id="modal-title">New Flag</div>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <input type="hidden" id="edit-key"/>
+
+        <div class="form-field">
+            <div class="field">
+                <label>Key</label>
+                <input type="text" id="f-key" placeholder="new_checkout_ui"/>
+            </div>
+        </div>
+        <div class="form-field">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" id="f-name" placeholder="New Checkout UI"/>
+            </div>
+        </div>
+        <div class="form-field">
+            <div class="field">
+                <label>Description</label>
+                <textarea id="f-desc" placeholder="What does this flag control?"></textarea>
+            </div>
+        </div>
+        <div class="form-grid">
+            <div class="field">
+                <label>Rollout % (0–100)</label>
+                <input type="number" id="f-rollout" min="0" max="100" value="100"/>
+            </div>
+            <div class="field">
+                <label>Environments</label>
+                <input type="text" id="f-envs" placeholder="production,staging"/>
+            </div>
+        </div>
+        <div class="form-field">
+            <div class="field">
+                <label>Allowlist User IDs</label>
+                <input type="text" id="f-allowlist" placeholder="user_001,user_002"/>
+            </div>
+        </div>
+        <div class="toggle-row">
+            <div>
+                <div class="toggle-label">Enabled</div>
+                <div class="toggle-hint">Turn this flag on globally</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="f-enabled"/><span class="slider"></span></label>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveFlag()">Save</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/js/app.js"></script>
+</body>
+</html>
