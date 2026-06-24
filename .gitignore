@@ -9,3 +9,8 @@ target/
 *.war
 *.log
 .DS_Store
+
+
+.env
+.env.local
+*.env

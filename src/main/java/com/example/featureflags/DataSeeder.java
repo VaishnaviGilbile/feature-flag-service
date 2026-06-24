@@ -14,7 +14,7 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Seed some example flags so you can test immediately
+        // Only seed if table is empty — safe for both H2 and PostgreSQL
         if (repository.count() == 0) {
             repository.save(flag("new_dashboard", "New Dashboard UI",
                     "Redesigned dashboard for all users", true, 100, null, null));
@@ -33,7 +33,7 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private FeatureFlag flag(String key, String name, String description,
-                              boolean enabled, int rollout, String envs, String allowlist) {
+                             boolean enabled, int rollout, String envs, String allowlist) {
         FeatureFlag f = new FeatureFlag();
         f.setKey(key);
         f.setName(name);
